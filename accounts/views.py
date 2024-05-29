@@ -5,10 +5,10 @@ from .forms import DoctorRegistrationForm
 from .models import Doctor, Session
 from .forms import BookingForm
 from .utils import search_doctors
-from .serializers import DoctorSerializer
-#from rest_framework import status
-#from rest_framework.response import Response
-#from rest_framework.views import APIView
+from .serializers import DoctorSerializer, PatientSerializer
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 
@@ -23,6 +23,15 @@ def register_doctor(request):
             return JsonResponse({'errors': form.errors}, status=400)
     else:
         return JsonResponse({'message': 'Method not allowed'}, status=405)
+
+
+class PatientRegistrationAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = PatientSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 def book_session(request, doctor_id):
