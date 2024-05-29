@@ -66,6 +66,7 @@ class Patient(models.Model):
             ('F', 'Female'),
         ]
         gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+        Patient_image = models.ImageField(upload_to='Patient_image', default='default_image.jpg')
 
 
 def __str__(self):

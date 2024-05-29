@@ -34,7 +34,7 @@ class PatientRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = Patient
-        fields = ['name', 'email', 'phone_number', 'age', 'gender']
+        fields = ['name', 'email', 'phone_number', 'age', 'gender', 'Patient_image']
 
     def clean_email(self):
         email = self.cleaned_data['email']

@@ -17,7 +17,7 @@ class PatientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Patient
-        fields = ['name', 'email', 'phone_number', 'age', 'gender', 'password', 'confirm_password']
+        fields = ['name', 'email', 'phone_number', 'age', 'gender', 'password', 'confirm_password', 'Patient_image']
 
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():
@@ -35,4 +35,3 @@ class PatientSerializer(serializers.ModelSerializer):
         user.save(validated_data['password'])
         user.save()
         return user
-    
