@@ -1,8 +1,10 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Doctor
+from .serializers import DoctorSerializer
 from accounts.models import Patient, Session
 from django.utils import timezone
+
 
 default_value = timezone.now()
 
@@ -52,7 +54,7 @@ class PatientRegistrationForm(forms.ModelForm):
         user.set_password(self.cleaned_data['password'])
         if commit:
             user.save()
-        return user
+            return user
 
 
 class BookingForm(forms.ModelForm):

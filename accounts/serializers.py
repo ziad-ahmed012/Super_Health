@@ -5,6 +5,6 @@ from .models import Doctor
 class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
-        fields = ['name', 'who_i', 'price', 'phone_number',
+        fields = ['name', 'who_i', 'price', 'phone_number', 'doctor_id_image',
                   'doctor_image', 'start_time', 'end_time',
                   'specialization', 'Location']

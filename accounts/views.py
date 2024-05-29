@@ -6,6 +6,11 @@ from .models import Doctor, Session
 from .forms import BookingForm
 from .utils import search_doctors
 from .serializers import DoctorSerializer
+#from rest_framework import status
+#from rest_framework.response import Response
+#from rest_framework.views import APIView
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
 
 
 def register_doctor(request):
@@ -13,10 +18,11 @@ def register_doctor(request):
         form = DoctorRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('success_url')  # Redirect to a success page
+            return JsonResponse({'message': 'Doctor registered successfully'}, status=201)
+        else:
+            return JsonResponse({'errors': form.errors}, status=400)
     else:
-        form = DoctorRegistrationForm()
-    return render(request, '', {'form': form})
+        return JsonResponse({'message': 'Method not allowed'}, status=405)
 
 
 def book_session(request, doctor_id):
@@ -62,3 +68,18 @@ def search_view(request):
 class DoctorViewSet(viewsets.ModelViewSet):
     queryset = Doctor.objects.all()
     serializer_class = DoctorSerializer
+
+
+#class DoctorRegistrationAPIView(APIView):
+ #   def get(self, request, *args, **kwargs):
+  #      doctors = Doctor.objects.all()
+    #    serializer = DoctorSerializer(doctors, many=True)
+     #   return Response(serializer.data, status=status.HTTP_200_OK)
+
+    #def post(self, request, *args, **kwargs):
+     #   form = DoctorRegistrationForm(request.POST, request.FILES)
+      #  if form.is_valid():
+       #     doctor = form.save()
+        #    serializer = DoctorSerializer(doctor)
+         #   return Response(serializer.data, status=status.HTTP_201_CREATED)
+        #return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
